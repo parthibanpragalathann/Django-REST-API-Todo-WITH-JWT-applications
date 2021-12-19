@@ -91,7 +91,6 @@ class Profile(viewsets.ModelViewSet):
             }
             return Response(res, status=status.HTTP_201_CREATED)
         else:
-
             return Response("errors please calm to check", status=status.HTTP_400_BAD_REQUEST)
 
 

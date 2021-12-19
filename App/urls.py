@@ -19,12 +19,8 @@ urlpatterns = [
     path('task/', TaskListView.as_view(), name='task_list'),#9
     path('task/<int:pk>/', TaskDetailView.as_view(), name='task_details'),#10
     path('task/completed/', CompletedTask.as_view(), name='task_completed'),#11
-
     path('', include(router.urls)),#7 #8
-
     path('user/refresh/token/', TokenRefreshView.as_view(), name='auth_refresh'),
     path('user/logout/', LogoutView.as_view(), name='auth_logout'),
-
-
     path('task/pagination/', PaginatedTask.as_view(), name='task_paginated'),
 ]
