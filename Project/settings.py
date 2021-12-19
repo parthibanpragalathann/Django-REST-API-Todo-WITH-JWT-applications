@@ -74,7 +74,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'DRF_TODO_JWT',
         'USER': 'parthi',
-        'PASSWORD': 'parthi*619',
+        'PASSWORD': '**********',
         'HOST': 'localhost',
         'PORT': '5432',
     }
