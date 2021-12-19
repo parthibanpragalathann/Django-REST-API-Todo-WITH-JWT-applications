@@ -106,6 +106,7 @@ d-----        18-12-2021     00:57                __pycache__
 ```
 
 ## setup and DB configuration  settings.py file project Directory
+
 ```python
 import os
 from datetime import timedelta
@@ -147,6 +148,7 @@ REST_FRAMEWORK = {
 }
 
 #DOUBT
+SECRET_KEY = 'your secret key'
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(weeks=521),  # 10 years
     "REFRESH_TOKEN_LIFETIME": timedelta(weeks=521),
@@ -161,11 +163,12 @@ SIMPLE_JWT = {
     "TOKEN_TYPE_CLAIM": "token_type",
 }
 
+BASE_DIR="your base directory"
 #create media directory in the project root directory 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-
 ```
+
 ##python manage.py makemigrations
 
 ##python manage.py migrate
