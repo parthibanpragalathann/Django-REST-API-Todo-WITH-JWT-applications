@@ -25,14 +25,6 @@ def current_user(request):
     else:
         return None
 
-class LoggedInUserView(APIView):
-    permission_classes = (IsAuthenticated,)
-
-    def get(self, request):
-        serializer = CustomUserSerializer(self.request.user)
-        return Response(serializer.data)
-
-
 class RegisterView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
     permission_classes = (AllowAny,)
@@ -41,6 +33,14 @@ class RegisterView(generics.CreateAPIView):
 class LoginView(TokenObtainPairView):
     permission_classes = (AllowAny,)
     serializer_class = LoginSerializer
+
+class LoggedInUserView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        serializer = CustomUserSerializer(self.request.user)
+        return Response(serializer.data)
+
 
 class LogoutView(generics.GenericAPIView):
     serializer_class = LogoutSerializer
@@ -62,6 +62,20 @@ class PasswordView(generics.RetrieveUpdateAPIView):
     queryset = CustomUser.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = PasswordSerializer
+
+    def put(self, request, pk, format=None):
+        user_pwd = self.get_object(pk)
+        serializer = PasswordSerializer(user_pwd, data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            res= {
+                "password": "change successfully. "
+            }
+            return Response(res, status=status.HTTP_200_OK)
+        else:
+            print('error', serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class DeleteUserView(generics.RetrieveDestroyAPIView):
     queryset = CustomUser.objects.all()
