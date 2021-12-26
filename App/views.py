@@ -63,18 +63,6 @@ class PasswordView(generics.RetrieveUpdateAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = PasswordSerializer
 
-    def put(self, request, pk, format=None):
-        user_pwd = self.get_object(pk)
-        serializer = PasswordSerializer(user_pwd, data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-            res= {
-                "password": "change successfully. "
-            }
-            return Response(res, status=status.HTTP_200_OK)
-        else:
-            print('error', serializer.errors)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class DeleteUserView(generics.RetrieveDestroyAPIView):
