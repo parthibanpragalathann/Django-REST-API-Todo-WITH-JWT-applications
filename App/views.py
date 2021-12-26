@@ -25,15 +25,13 @@ def current_user(request):
     else:
         return None
 
-class CustomUserView(APIView):        #class member details view here(Read Only.)
-    parser_classes = [JSONParser]
-    serializer_class = CustomUserSerializer
+class LoggedInUserView(APIView):
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request, *args, **kwargs):
-        _info = CustomUser.objects.order_by("name")
-        serializer = CustomUserSerializer(_info, many=True)
+    def get(self, request):
+        serializer = CustomUserSerializer(self.request.user)
         return Response(serializer.data)
+
 
 class RegisterView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
@@ -53,6 +51,7 @@ class LogoutView(generics.GenericAPIView):
         serializer.save()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class UpdateUserView(generics.RetrieveUpdateAPIView):
     queryset = CustomUser.objects.all()
