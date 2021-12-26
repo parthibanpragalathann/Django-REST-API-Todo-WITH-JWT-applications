@@ -1,6 +1,6 @@
 from django.urls import path, include
 from .views import RegisterView, LoginView, LogoutView, UpdateUserView, DeleteUserView, PasswordView, \
-    TaskListView, CustomUserView, TaskDetailView, \
+    TaskListView, TaskDetailView, \
     CompletedTask, PaginatedTask, Profile, LoggedInUserView
 from rest_framework_simplejwt.views import TokenRefreshView
 
