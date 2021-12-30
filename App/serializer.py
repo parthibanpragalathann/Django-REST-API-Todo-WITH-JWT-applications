@@ -78,7 +78,6 @@ class UpdateUserSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({"email": "This email is already in use."})
         return value
 
-
     def update(self, instance, validated_data):
         instance.name = validated_data['name']
         instance.age = validated_data['age']
