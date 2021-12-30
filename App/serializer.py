@@ -66,24 +66,26 @@ class LogoutSerializer(serializers.Serializer):
             self.fail('bad token')
 
 class UpdateUserSerializer(serializers.ModelSerializer):
-
+    email = serializers.EmailField(required=False)
     class Meta:
         model = CustomUser
         fields = ('id', 'name', 'email', 'age')
 
     def validate_email(self, value):
         user = self.context['request'].user
-        if CustomUser.objects.exclude(pk=user.pk).filter(email=value).exists():
-            raise serializers.ValidationError({"email": "This email is already in use."})
-        return value
+        if value:
+            if CustomUser.objects.exclude(pk=user.pk).filter(email=value).exists():
+                raise serializers.ValidationError({"email": "This email is already in use."})
+            return value
+
 
     def update(self, instance, validated_data):
-        instance.name = validated_data['name']
-        instance.age = validated_data['age']
-        instance.email = validated_data['email']
-        instance.save()
-
-        return instance
+        if validated_data['name'] or validated_data['age'] or validated_data['email']:
+            instance.name = validated_data['name']
+            instance.age = validated_data['age']
+            instance.email = validated_data['email']
+            instance.save()
+            return instance
 
 class PasswordSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])

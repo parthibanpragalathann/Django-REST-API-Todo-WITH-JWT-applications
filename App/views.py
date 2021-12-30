@@ -63,8 +63,6 @@ class PasswordView(generics.RetrieveUpdateAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = PasswordSerializer
 
-
-
 class DeleteUserView(generics.RetrieveDestroyAPIView):
     queryset = CustomUser.objects.all()
     permission_classes = (IsAuthenticated,)
