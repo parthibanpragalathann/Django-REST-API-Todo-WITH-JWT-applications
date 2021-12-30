@@ -80,12 +80,11 @@ class UpdateUserSerializer(serializers.ModelSerializer):
 
 
     def update(self, instance, validated_data):
-        if validated_data['name'] or validated_data['age'] or validated_data['email']:
-            instance.name = validated_data['name']
-            instance.age = validated_data['age']
-            instance.email = validated_data['email']
-            instance.save()
-            return instance
+        instance.name = validated_data['name']
+        instance.age = validated_data['age']
+        instance.email = validated_data['email']
+        instance.save()
+        return instance
 
 class PasswordSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
